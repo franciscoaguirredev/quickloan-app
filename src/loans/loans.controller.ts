@@ -10,8 +10,8 @@ export class LoansController {
     ){}
 
   @Post()
-  createLoan(@Body() createLoan: CreateLoanDto ) {
-    return 'Loan created';
+  createLoan(@Body() createLoan: any ) {
+    return `Loan created for ${createLoan.userId}`
   }
 
   @Get(':id')

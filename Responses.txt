@@ -1,0 +1,70 @@
+Historias de Usuario
+1. Configuración del Proyecto
+    i. ¿Qué propósito cumple el archivo main.ts en un proyecto NestJS y por qué es crucial en la configuración inicial?
+        R: Es el punto de entrada de la aplicación, aqui es donde se crea e inicia la aplicación. Es el archivo que conecta
+        todos los componentes antes de que la aplicación comience a procesar solicitudes.
+    ii. ¿Qué diferencia existe entre app.module.ts y app.controller.ts? 
+        R: Contoller es el punto de entrada de las solicitudes. Aqui se manejan las rutas y los metodos http.
+        App.module.ts este archivo agrupa y organiza la configuración y los modulos de la aplicación, 
+        asegurando que todas las partes de la aplicación esten correctamete conectadas.
+        ¿Cómo se relacionan estos archivos con la modularidad y la estructura de la aplicación?
+        El archivo main es el punto de entrada de la aplicación y el app es desde donde se cargan las partes de aplicación.
+
+2. Creación de Módulos Básicos
+    Cascarita: el modulo fue creado de manera correcta y bajo el estandar de NestJS.
+
+    i. ¿Por qué crees que es importante modularizar la aplicación separando funcionalidades en diferentes módulos?
+        R: Para que el codigo pueda ser escalable y mantenible, es decir, que pueda estar abierto a nuevas implementaciones 
+        pero que a su vez pueda realizarse mantenimiento sin impactar en las funcionalidades de la aplicación.
+    ii. ¿Cómo crees que afecta la modularidad al mantenimiento y escalabilidad de la aplicación?
+        R: Afecta de manera positiva ya que permitiría realizar cambios si la logica del negocio cambia.
+    iii. Despues de crear los archivos de los módulos, ¿qué archivos se generan y cómo se relacionan con los módulos creados?
+        R: Se crean los dos modulos dentro de la carpeta src, ademas, estos modulos fueron incluídos dentro de modulo de app.
+
+3. Implementación de Controladores
+    Cascarita: En el Post el nombre de la variable para el body es incorrecto, ademas el tipado no debería ser any,
+    para corregir esto debería ser: @Body() createLoan: createLoanDto
+    i. ¿Qué sucede si defines incorrectamente un decorador en un controlador?
+        R: Muy probablemente se genere algun tipo erroro haya un comportamiento inesperado.
+        ¿Cómo afecta esto a la funcionalidad del endpoint?
+        R: Haría que no funcione y devuelva un error o bien podría no obtener el resultado esperado.
+        Tambien podría prensetarsen fallos en los middlewares o guardianes, permitiendo el acceso o bloqueo incorrectamente.
+
+**************************************************************************
+
+Historia de Usuario 2: Implementación de la Lógica de Negocio y Seguridad
+
+1. Desarrollo de Servicios
+    Cascarita: Se ha cambiado el nombre del metodo por loanStatus, se modifica controlador llamando el servicio correspondiente.
+    i. ¿Qué ventajas tiene manejar la lógica de negocio en servicios en lugar de controladores?
+        R: Hay una separación de responsabilidades, los servicios se encargan unicamente de la logica y operaciones,
+        mientras que los controllers son puntos de acceso a solicitudes o respuestas.
+    ii. ¿Cómo se relaciona la inyección de dependencias con la modularidad y la capacidad de prueba de la aplicación?
+        R: La relación que existe es que cuando la aplicación esta bien divida permite una inyección de dependencia y
+        un acoplamiento bajo entre los modulos, sería muy dificil aplicar la DI si el aplicación no esta segmentada.
+        Respecto a las pruebas, permite revisar y corregir facilmente cuando hay modularidad, podría decirse que es 
+        mas facil encontrar el error o el punto de fallo, o bien tanto la DI como la modularidad reduce la probabilidad de fallo. 
+
+2. Aplicación de Decoradores y Pipes
+    Cascarita: Se aplica en el archivo main dentro de la funcion bootstrap, ademas, se instalan class-validator y class-transformer.
+                Se ha revisado la documentación de NestJS y esta correctamente configurado.
+    
+    i. ¿Por qué es crucial validar los datos de entrada en una aplicación que maneja transacciones financieras?
+        R: Para no correr el riesgo de hacer transacciones incorrectas, ademas en cierta manera brinda seguridad a la aplicacion.
+
+    ii. ¿Qué podría suceder si un decorador está mal colocado o si no se aplican los pipes correctamente?
+        R: Es posible que la aplicación deje de fallar, arroje resultados inesperados o cree un fallo de seguridad.
+
+3. Configuración de Exception Filters
+    Cascarita: Se ha aplicado: app.useGlobalFilters(new HttpExceptionFilter) en el archivo main de la aplicacion.
+
+    i. ¿Cómo impacta el manejo adecuado de excepciones en la experiencia del usuario y en la seguridad de la aplicación?
+        R: Informa directamente al usuario sobre los errores ocurridos en la aplicación, esto les permite identificar rápidamente
+        el problema y tomar las acciones necesarias. Los codigos de error ayuda mucho para el manejo de errores en forma correcta.
+        En cuanto a seguridad, previene fugas o acceso de la información, detección temprana de errores y prevención  de ataques.
+
+    ii. ¿Por qué es importante tener un manejo centralizado de excepciones en una aplicación NestJS?
+        R: Para que haya un estandar de respuesta aunque se puede tener respuestas personalizadas según el punto de aplicación.
+        Tener un manejo de errores con la respuesta adecuada en el punto correcto permite realizar una correción asertada.
+        Las excepciones entregan informacíón detallada sobre el fallo ocurrido, esto permite identificar la causa o punto de fallo.
+        Dicen que es mas facil para escribir las pruebas unitarias para los diferentes casos de error.
